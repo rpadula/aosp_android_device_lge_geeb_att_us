@@ -82,7 +82,7 @@ extern "C" {
 
 //Default FPS
 #define MINIMUM_FPS 5
-#define MAXIMUM_FPS 30
+#define MAXIMUM_FPS 120
 #define DEFAULT_FIXED_FPS 30
 #define DEFAULT_FPS 30
 
@@ -694,13 +694,6 @@ void QCameraHardwareInterface::loadTables()
     }
     ALOGV("%s: X", __func__);
 }
-
-rat_t getRational(int num, int denom)
-{
-    rat_t temp = {num, denom};
-    return temp;
-}
-
 void QCameraHardwareInterface::initDefaultParameters()
 {
     bool ret;
@@ -1253,12 +1246,6 @@ void QCameraHardwareInterface::initDefaultParameters()
             (void *)&verticalViewAngle);
     mParameters.setFloat(QCameraParameters::KEY_VERTICAL_VIEW_ANGLE,
                     verticalViewAngle);
-
-    //Set Aperture
-    float f_number = 0.0f;
-    cam_config_get_parm(mCameraId, MM_CAMERA_PARM_F_NUMBER,
-            (void *)&f_number);
-    mExifValues.f_number = getRational(f_number*F_NUMBER_DECIMAL_PRECISION, F_NUMBER_DECIMAL_PRECISION);
 
     //Set Exposure Compensation
     mParameters.set(
@@ -3821,7 +3808,7 @@ status_t QCameraHardwareInterface::setHistogram(int histogram_en)
                 }
                 mHistServer.size = sizeof(camera_preview_histogram_info);
 #ifdef USE_ION
-                if(allocate_ion_memory(&mHistServer, cnt, ION_IOMMU_HEAP_ID) < 0) {
+                if(allocate_ion_memory(&mHistServer, cnt, ION_CP_MM_HEAP_ID) < 0) {
                   ALOGE("%s ION alloc failed\n", __func__);
                   return -1;
                 }
@@ -4017,6 +4004,12 @@ void QCameraHardwareInterface::addExifTag(exif_tag_id_t tagid, exif_tag_type_t t
     mExifTableNumEntries++;
 }
 
+rat_t getRational(int num, int denom)
+{
+    rat_t temp = {num, denom};
+    return temp;
+}
+
 void QCameraHardwareInterface::initExifData(){
     if(mExifValues.dateTime) {
         addExifTag(EXIFTAGID_EXIF_DATE_TIME_ORIGINAL, EXIF_ASCII,
@@ -4026,10 +4019,6 @@ void QCameraHardwareInterface::initExifData(){
     }
     addExifTag(EXIFTAGID_FOCAL_LENGTH, EXIF_RATIONAL, 1, 1, (void *)&(mExifValues.focalLength));
     addExifTag(EXIFTAGID_ISO_SPEED_RATING,EXIF_SHORT,1,1,(void *)&(mExifValues.isoSpeed));
-
-    // normal f_number is from 1.2 to 22, but I'd like to put some margin.
-    if(mExifValues.f_number.num>0 && mExifValues.f_number.num<3200)
-      addExifTag(EXIFTAGID_F_NUMBER,EXIF_RATIONAL,1,1,(void *)&(mExifValues.f_number));
 
     if(mExifValues.mGpsProcess) {
         addExifTag(EXIFTAGID_GPS_PROCESSINGMETHOD, EXIF_ASCII,
@@ -4081,8 +4070,6 @@ void QCameraHardwareInterface::initExifData(){
                   3, 1, (void *)mExifValues.gpsTimeStamp);
         ALOGV("EXIFTAGID_GPS_TIMESTAMP set");
     }
-    if(mExifValues.exposure_time.num || mExifValues.exposure_time.denom)
-        addExifTag(EXIFTAGID_EXPOSURE_TIME, EXIF_RATIONAL, 1, 1, (void *)&mExifValues.exposure_time);
 
 }
 
@@ -4130,6 +4117,8 @@ void QCameraHardwareInterface::setExifTags()
         temp.num = 1;
         temp.denom = temp2;
         memcpy(&mExifValues.exposure_time, &temp, sizeof(mExifValues.exposure_time));
+        addExifTag(EXIFTAGID_EXPOSURE_TIME, EXIF_RATIONAL, 1, 1, (void *)&mExifValues.exposure_time);
+
         ALOGV(" The exposure value is %f", temp2);
     }
     //get time and date from system
@@ -4291,15 +4280,15 @@ status_t QCameraHardwareInterface::setNoDisplayMode(const QCameraParameters& par
 status_t QCameraHardwareInterface::setCAFLockCancel(void)
 {
     ALOGV("%s : E", __func__);
+    status_t rc = NO_ERROR;
+    int32_t value;
 
     //for CAF unlock
-    if(MM_CAMERA_OK!=cam_ops_action(mCameraId,false,MM_CAMERA_OPS_FOCUS,NULL )) {
-      ALOGE("%s: AF command failed err:%d error %s",__func__, errno,strerror(errno));
-      return -1;
-    }
-
+    value = 1;
+    rc = (native_set_parms(MM_CAMERA_PARM_CAF_LOCK_CANCEL, sizeof(int32_t), (void *)(&value))) ?
+                        NO_ERROR : UNKNOWN_ERROR;
     ALOGV("%s : X", __func__);
-    return NO_ERROR;
+    return rc;
 }
 
 void QCameraHardwareInterface::prepareVideoPicture(bool disable){

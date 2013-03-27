@@ -1079,8 +1079,22 @@ status_t QCameraHardwareInterface::startPreview2()
         mParameters.setPreviewFrameRateMode("frame-rate-auto");
         setPreviewFrameRateMode(mParameters);
 
+        if (mHasAutoFocusSupport) {
+            int cafSupport = true;
+            int caf_type = 2;
+            native_set_parms(MM_CAMERA_PARM_CAF_TYPE, sizeof(caf_type), (void *)&caf_type);
+            native_set_parms(MM_CAMERA_PARM_CONTINUOUS_AF, sizeof(cafSupport),
+                                   (void *)&cafSupport);
+        }
     }
 
+     if (mHasAutoFocusSupport && strcmp(str, "auto")) {
+         int cafSupport = true;
+         int caf_type = 2;
+         native_set_parms(MM_CAMERA_PARM_CAF_TYPE, sizeof(caf_type), (void *)&caf_type);
+         native_set_parms(MM_CAMERA_PARM_CONTINUOUS_AF, sizeof(cafSupport),
+                               (void *)&cafSupport);
+     }
     /*  get existing preview information, by qury mm_camera*/
     memset(&dim, 0, sizeof(cam_ctrl_dimension_t));
     ret = cam_config_get_parm(mCameraId, MM_CAMERA_PARM_DIMENSION,&dim);
@@ -1621,7 +1635,6 @@ void liveshot_callback(mm_camera_ch_data_buf_t *recvd_frame,
         ALOGE("%s: Error : returned from takePictureLiveshot",__func__);
         return;
     }
-    pme->setCAFLockCancel();
     ALOGV("%s: X", __func__);
 
 }
@@ -1638,7 +1651,7 @@ status_t  QCameraHardwareInterface::takePicture()
 
     if(QCAMERA_HAL_RECORDING_STARTED != mPreviewState){
       isp3a_af_mode_t afMode = getAutoFocusMode(mParameters);
-      if (!mFlashCond)
+      if (afMode != AF_MODE_CAF && !mFlashCond)
       {
         mFlashCond = getFlashCondition();
       }
@@ -2436,9 +2449,7 @@ int QCameraHardwareInterface::initHeapMem( QCameraHalHeap_t *heap,
     int rc = 0;
     int i;
     int path;
-    int ion_fd;
     struct msm_frame *frame;
-    struct ion_flush_data cache_inv_data;
     ALOGV("Init Heap =%p. stream_buf =%p, pmem_type =%d, num_of_buf=%d. buf_len=%d, cbcr_off=%d",
          heap, StreamBuf, pmem_type, num_of_buf, buf_len, cbcr_off);
     if(num_of_buf > MM_CAMERA_MAX_NUM_FRAMES || heap == NULL ||
@@ -2509,21 +2520,6 @@ int QCameraHardwareInterface::initHeapMem( QCameraHalHeap_t *heap,
             rc = -1;
             break;
         }
-
-        memset(&cache_inv_data, 0, sizeof(struct ion_flush_data));
-        cache_inv_data.vaddr = (void*) heap->camera_memory[i]->data;
-        cache_inv_data.fd = heap->ion_info_fd[i].fd;
-        cache_inv_data.handle = heap->ion_info_fd[i].handle;
-        cache_inv_data.length = heap->alloc[i].len;
-        ion_fd = heap->main_ion_fd[i];
-        if(ion_fd > 0) {
-            if(cache_ops(ion_fd, &cache_inv_data, ION_IOC_CLEAN_INV_CACHES) < 0)
-                ALOGE("%s: Cache Invalidate failed\n", __func__);
-            else {
-                ALOGV("%s: Successful cache invalidate\n", __func__);
-            }
-        }
-
         if (StreamBuf != NULL) {
             frame = &(StreamBuf->frame[i]);
             memset(frame, 0, sizeof(struct msm_frame));
