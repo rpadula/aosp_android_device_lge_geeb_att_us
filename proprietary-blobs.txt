@@ -129,6 +129,8 @@
 /system/lib/libnetmgr.so
 /system/lib/liboemcamera.so
 /system/lib/liboemcrypto.so
+/system/lib/libOmxAacDec.so
+/system/lib/libOmxWmaDec.so
 /system/lib/libqcci_legacy.so
 /system/lib/libqdi.so
 /system/lib/libqdp.so
