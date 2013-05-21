@@ -20,8 +20,13 @@
 # 526897 = JOP39B
 # 527221 = JOP40
 # 527662 = JOP40C
-# 573038 = JDQ39
 # end jb-mr1-dev
+# start jb-mr1.1-dev
+# 573038 = JDQ39
+# end jb-mr1.1-dev
+# start jb-mr2-dev
+# 683083 = JWR51
+# end jb-mr2-dev
 
 source ../../../common/clear-factory-images-variables.sh
 BUILD=573038
