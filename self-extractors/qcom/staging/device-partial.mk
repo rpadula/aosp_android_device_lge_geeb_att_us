@@ -155,3 +155,4 @@ PRODUCT_COPY_FILES := \
     vendor/qcom/geeb_att_us/proprietary/libxml.so:system/lib/libxml.so:qcom \
     vendor/qcom/geeb_att_us/proprietary/libdrmdecrypt.so:system/vendor/lib/libdrmdecrypt.so:qcom \
 
+PRODUCT_PACKAGES := libacdbloader
