@@ -29,4 +29,3 @@ PRODUCT_COPY_FILES := \
     vendor/lge/gee/proprietary/keymaster.b02:system/vendor/firmware/keymaster/keymaster.b02:lge \
     vendor/lge/gee/proprietary/keymaster.b03:system/vendor/firmware/keymaster/keymaster.b03:lge \
     vendor/lge/gee/proprietary/keymaster.mdt:system/vendor/firmware/keymaster/keymaster.mdt:lge \
-

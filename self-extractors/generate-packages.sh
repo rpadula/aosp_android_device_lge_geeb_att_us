@@ -20,6 +20,7 @@
 # end jb-mr1.1-dev
 # start jb-mr2-dev
 # 686185 = JWR53
+# 689345 = JWR58
 # end jb-mr2-dev
 BRANCH=jb-mr2-dev
 if test $BRANCH = jb-mr1.1-dev
@@ -50,6 +51,7 @@ do
             system/etc/DxHDCP.cfg \
             system/lib/libAKM.so \
             system/lib/libDxHdcp.so \
+            system/lib/libacdbdata.so \
             system/lib/libcamera_fast_af.so \
             system/lib/libmorpho_noise_reduction.so \
             system/vendor/firmware/discretix/dxhdcp2.b00 \
@@ -75,7 +77,6 @@ do
             system/bin/efsks \
             system/bin/hci_qcomm_init \
             system/bin/ks \
-            system/bin/mm-audio-send-cal \
             system/bin/mm-qcamera-daemon \
             system/bin/mpdecision \
             system/bin/netmgrd \
@@ -101,19 +102,16 @@ do
             system/lib/egl/libEGL_adreno200.so \
             system/lib/egl/libGLESv1_CM_adreno200.so \
             system/lib/egl/libGLESv2_adreno200.so \
+            system/lib/egl/libq3dtools_adreno200.so \
             system/lib/hw/gps.msm8960.so \
             system/lib/hw/sensors.msm8960.so \
             system/lib/libC2D2.so \
             system/lib/libCommandSvc.so \
             system/lib/libI420colorconvert.so \
-            system/lib/libOmxAacDec.so \
-            system/lib/libOmxWmaDec.so \
             system/lib/libQSEEComAPI.so \
-            system/lib/lib_dlb_msd.so \
             system/lib/libacdbloader.so \
             system/lib/libaudcal.so \
             system/lib/libaudioalsa.so \
-            system/lib/libaudioparsers.so \
             system/lib/libc2d2_a3xx.so \
             system/lib/libchromatix_imx111_default_video.so \
             system/lib/libchromatix_imx111_preview.so \
