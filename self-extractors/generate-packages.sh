@@ -21,6 +21,7 @@
 # start jb-mr2-dev
 # 686185 = JWR53
 # 689345 = JWR58
+# 690834 = JWR59
 # end jb-mr2-dev
 BRANCH=jb-mr2-dev
 if test $BRANCH = jb-mr1.1-dev
