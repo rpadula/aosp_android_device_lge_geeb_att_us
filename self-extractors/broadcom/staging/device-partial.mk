@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Broadcom blob(s) necessary for Mako hardware
+# Broadcom blob(s) necessary for geeb_att_us hardware
 PRODUCT_COPY_FILES := \
-    vendor/broadcom/mako/proprietary/bcm2079x_firmware.ncd:system/vendor/firmware/bcm2079x_firmware.ncd:broadcom \
-    vendor/broadcom/mako/proprietary/bcm2079x_pre_firmware.ncd:system/vendor/firmware/bcm2079x_pre_firmware.ncd:broadcom \
+    vendor/broadcom/geeb_att_us/proprietary/bcm2079x_firmware.ncd:system/vendor/firmware/bcm2079x_firmware.ncd:broadcom \
+    vendor/broadcom/geeb_att_us/proprietary/bcm2079x_pre_firmware.ncd:system/vendor/firmware/bcm2079x_pre_firmware.ncd:broadcom \
 

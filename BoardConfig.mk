@@ -27,13 +27,14 @@ TARGET_NO_BOOTLOADER := true
 
 BOARD_KERNEL_BASE := 0x80200000
 BOARD_KERNEL_PAGESIZE := 2048
-BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=mako lpj=67677
+BOARD_KERNEL_CMDLINE := console=ttySHL0,115200,n8 androidboot.hardware=geeb_att_us lpj=67677
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01600000
 
 BOARD_USES_ALSA_AUDIO:= true
 BOARD_USES_LEGACY_ALSA_AUDIO:= false
 BOARD_USES_FLUENCE_INCALL := true
 BOARD_USES_SEPERATED_AUDIO_INPUT := true
+BOARD_HAVE_LOW_LATENCY_AUDIO := true
 
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_QCOM := true
@@ -41,11 +42,11 @@ BLUETOOTH_HCI_USE_MCT := true
 
 TARGET_NO_RADIOIMAGE := true
 TARGET_BOARD_PLATFORM := msm8960
-TARGET_BOOTLOADER_BOARD_NAME := MAKO
-TARGET_BOOTLOADER_NAME=mako
-TARGET_BOARD_INFO_FILE := device/lge/mako/board-info.txt
+TARGET_BOOTLOADER_BOARD_NAME := geeb_att_us
+TARGET_BOOTLOADER_NAME=geeb_att_us
+TARGET_BOARD_INFO_FILE := device/lge/geeb_att_us/board-info.txt
 
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/lge/mako/bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/lge/geeb_att_us/bluetooth
 
 # FIXME: HOSTAPD-derived wifi driver
 BOARD_HAS_QCOM_WLAN := true
@@ -58,7 +59,7 @@ BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
 WIFI_DRIVER_FW_PATH_STA := "sta"
 WIFI_DRIVER_FW_PATH_AP  := "ap"
 
-BOARD_EGL_CFG := device/lge/mako/egl.cfg
+BOARD_EGL_CFG := device/lge/geeb_att_us/egl.cfg
 
 #BOARD_USES_HGL := true
 #BOARD_USES_OVERLAY := true
@@ -69,9 +70,9 @@ TARGET_USES_SF_BYPASS := true
 TARGET_USES_C2D_COMPOSITON := true
 
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
-TARGET_RECOVERY_UI_LIB := librecovery_ui_mako
+TARGET_RECOVERY_UI_LIB := librecovery_ui_geeb_att_us
 
-TARGET_RECOVERY_FSTAB = device/lge/mako/fstab.mako
+TARGET_RECOVERY_FSTAB = device/lge/geeb_att_us/fstab.geeb_att_us
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_BOOTIMAGE_PARTITION_SIZE := 23068672 # 22M
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 23068672 # 22M
@@ -85,15 +86,15 @@ BOARD_USES_SECURE_SERVICES := true
 BOARD_USES_EXTRA_THERMAL_SENSOR := true
 BOARD_USES_CAMERA_FAST_AUTOFOCUS := true
 
-BOARD_LIB_DUMPSTATE := libdumpstate.mako
+BOARD_LIB_DUMPSTATE := libdumpstate.geeb_att_us
 
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := $(TARGET_BOARD_PLATFORM)
 TARGET_NO_RPC := true
 
-TARGET_RELEASETOOLS_EXTENSIONS := device/lge/mako
+TARGET_RELEASETOOLS_EXTENSIONS := device/lge/geeb_att_us
 
 BOARD_SEPOLICY_DIRS := \
-       device/lge/mako/sepolicy
+       device/lge/geeb_att_us/sepolicy
 
 BOARD_SEPOLICY_UNION := \
        app.te \
@@ -121,4 +122,4 @@ BOARD_CHARGER_ENABLE_SUSPEND := true
 
 USE_DEVICE_SPECIFIC_CAMERA := true
 
--include vendor/lge/mako/BoardConfigVendor.mk
+-include vendor/lge/gee/BoardConfigVendor.mk

@@ -25,10 +25,10 @@
 
 source ../../../common/clear-factory-images-variables.sh
 BUILD=573038
-DEVICE=mako
-PRODUCT=occam
+DEVICE=geeb_att_us
+PRODUCT=gee
 VERSION=jdq39
 SRCPREFIX=signed-
-BOOTLOADER=makoz10o
+BOOTLOADER=geeb_att_usz10o
 RADIO=m9615a-cefwmazm-2.0.1700.48
 source ../../../common/generate-factory-images-common.sh

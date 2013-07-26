@@ -21,11 +21,11 @@
 BRANCH=jb-mr1.1-dev
 if test $BRANCH = jb-mr1.1-dev
 then
-  ZIP=occam-ota-573038.zip
+  ZIP=gee-ota-573038.zip
   BUILD=jdq39
 fi # jb-mr1.1-dev
-ROOTDEVICE=mako
-DEVICE=mako
+ROOTDEVICE=geeb_att_us
+DEVICE=geeb_att_us
 MANUFACTURER=lge
 
 for COMPANY in broadcom lge qcom
