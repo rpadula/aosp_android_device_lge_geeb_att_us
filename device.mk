@@ -52,6 +52,15 @@ PRODUCT_COPY_FILES += \
 	device/lge/geeb_att_us/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini \
 	device/lge/geeb_att_us/WCNSS_qcom_wlan_nv.bin:system/etc/wifi/WCNSS_qcom_wlan_nv.bin
 
+# Non-Ramdisk Init Scripts
+PRODUCT_COPY_FILES += \
+             device/lge/geeb_att_us/scripts/init.gee.bt.sh:system/etc/init.gee.bt.sh \
+	device/lge/geeb_att_us/scripts/efsbackup.sh:system/bin/efsbackup.sh
+
+# Script for baseband name resolution
+PRODUCT_COPY_FILES += \
+             device/lge/geeb_att_us/fetch-swv:system/bin/fetch-swv
+
 PRODUCT_COPY_FILES += \
 	device/lge/geeb_att_us/snd_soc_msm_2x_Fusion3:system/etc/snd_soc_msm/snd_soc_msm_2x_Fusion3 \
 	device/lge/geeb_att_us/audio_policy.conf:system/etc/audio_policy.conf
@@ -108,10 +117,13 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
 	device/lge/geeb_att_us/gps.conf:system/etc/gps.conf
 
+# NFC firmware
+PRODUCT_COPY_FILES += \
+    device/lge/geeb_att_us/libpn544_fw.so:system/vendor/firmware/libpn544_fw.so \
+
 # NFC packages
 PRODUCT_PACKAGES += \
-    nfc_nci.geeb_att_us \
-    NfcNci \
+    Nfc \
     Tag \
     com.android.nfc_extras
 
@@ -127,7 +139,9 @@ PRODUCT_COPY_FILES += \
     $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml \
     frameworks/native/data/etc/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml \
     frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
-    device/lge/geeb_att_us/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf
+
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.nfc.port=I2C
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.opengles.version=196608
@@ -239,7 +253,10 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 	rild.libpath=/system/lib/libril-qc-qmi-1.so
 
 PRODUCT_PROPERTY_OVERRIDES += \
-	telephony.lteOnCdmaDevice=0
+	telephony.lteOnCdmaDevice=0 \
+	telephony.lteOnGsmDevice=1 \
+	ro.telephony.default_network=9 \
+	ro.ril.def.preferred.network=9
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	drm.service.enabled=true
