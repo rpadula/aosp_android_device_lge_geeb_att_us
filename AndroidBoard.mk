@@ -17,3 +17,5 @@
 ifeq ($(TARGET_PREBUILT_KERNEL),)
 TARGET_PREBUILT_KERNEL := device/lge/geeb_att_us-kernel/kernel
 endif
+
+endif
