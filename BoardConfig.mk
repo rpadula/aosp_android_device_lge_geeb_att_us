@@ -93,6 +93,8 @@ TARGET_NO_RPC := true
 
 TARGET_RELEASETOOLS_EXTENSIONS := device/lge/geeb_att_us
 
+BOARD_RIL_CLASS := ../../../device/lge/geeb/ril/
+
 BOARD_SEPOLICY_DIRS := \
        device/lge/geeb_att_us/sepolicy
 

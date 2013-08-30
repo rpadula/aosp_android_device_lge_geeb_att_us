@@ -255,8 +255,11 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
 	telephony.lteOnCdmaDevice=0 \
 	telephony.lteOnGsmDevice=1 \
-	ro.telephony.default_network=9 \
+	ro.telephony.default_network=10 \
 	ro.ril.def.preferred.network=9
+
+PRODUCT_PROPERTY_OVERRIDES += \
+        ro.telephony.ril_class=GeebRIL
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	drm.service.enabled=true
