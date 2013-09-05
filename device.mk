@@ -57,6 +57,10 @@ PRODUCT_COPY_FILES += \
              device/lge/geeb_att_us/scripts/init.gee.bt.sh:system/etc/init.gee.bt.sh \
 	device/lge/geeb_att_us/scripts/efsbackup.sh:system/bin/efsbackup.sh
 
+# override voice tx device when on headphones with no mic(needed for JB radio)
+PRODUCT_PROPERTY_OVERRIDES += \
+        ro.ril.tx_headphone_override=Handset
+
 # Script for baseband name resolution
 PRODUCT_COPY_FILES += \
              device/lge/geeb_att_us/fetch-swv:system/bin/fetch-swv
