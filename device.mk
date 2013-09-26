@@ -35,13 +35,6 @@ PRODUCT_PACKAGES += \
     charger_res_images \
     charger
 
-# Live Wallpapers
-PRODUCT_PACKAGES += \
-        LiveWallpapers \
-        LiveWallpapersPicker \
-        VisualizationWallpapers \
-        librs_jni
-
 LOCAL_KERNEL := device/lge/geeb_att_us-kernel/kernel
 
 PRODUCT_COPY_FILES := \
